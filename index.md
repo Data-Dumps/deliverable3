@@ -1,33 +1,37 @@
----
-title: "R Notebook"
-output: github_document
----
+R Notebook
+================
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you
+execute code within the notebook, the results appear beneath the code.
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+Try executing this chunk by clicking the *Run* button within the chunk
+or by placing your cursor inside it and pressing *Cmd+Shift+Enter*.
 
-```{r}
+``` r
 link="https://github.com/Data-Dumps/deliverable3/raw/main/dinodata_cleaned.xlsx"
   
 library(rio)
 ```
 
-
-```{r}
+``` r
 dinodata=import(link)
 #str(dinodata)
 DinoTable=table(dinodata$ISO3)
 ```
-```{r}
+
+``` r
 DinoDF=as.data.frame(DinoTable)
 names(DinoDF)=c('ISO3','count')
 ```
-```{r}
+
+``` r
 linkMap="https://github.com/EvansDataScience/VAforPM_Spatial/raw/main/worldMap.geojson" 
 library(sf)
 ```
-```{r}
+
+    ## Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
+
+``` r
 mapWorld=read_sf(linkMap)
 
 #mapWorld
@@ -48,26 +52,42 @@ baseMap= ggplot(data=mapWorld) + theme_classic() +
 #see
 baseMap
 ```
-```{r}
+
+![](index_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+``` r
 numericMap= baseMap + geom_sf(data=mapWorld_indexes,
                        aes(fill=count), # variable from mapWorld_indexes
                        color=NA)
 numericMap
 ```
-```{r}
+
+![](index_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
 numericMap2 = numericMap + scale_fill_gradient(low = 'light blue',
                                  high= 'Black')
 numericMap2
 ```
-```{r}
+
+![](index_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+``` r
 titleText='Global Distribution of Dinosaur Species Discovered'
 numericMap3 = numericMap2 + labs(title=titleText,x="", caption = "Source: National History Museum", subtitle = "More dinosaurs have been discovered in the USA than any other country")
 numericMap3
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+![](index_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or
+by pressing *Cmd+Option+I*.
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+When you save the notebook, an HTML file containing the code and output
+will be saved alongside it (click the *Preview* button or press
+*Cmd+Shift+K* to preview the HTML file).
 
+The preview shows you a rendered HTML copy of the contents of the
+editor. Consequently, unlike *Knit*, *Preview* does not run any R code
+chunks. Instead, the output of the chunk when it was last run in the
+editor is displayed.
